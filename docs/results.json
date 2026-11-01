@@ -1,0 +1,179 @@
+{
+  "generated_by": "scripts/render_assets.py",
+  "examples": [
+    {
+      "file": "examples/good.pdf",
+      "bytes": 2590,
+      "version": "1.7",
+      "objects": 13,
+      "pages": 2,
+      "risk": 0,
+      "grade": "A",
+      "clean": true,
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0
+      },
+      "findings": []
+    },
+    {
+      "file": "examples/bad.pdf",
+      "bytes": 1093,
+      "version": "1.7",
+      "objects": 7,
+      "pages": 1,
+      "risk": 76,
+      "grade": "F",
+      "clean": false,
+      "counts": {
+        "critical": 1,
+        "high": 2,
+        "medium": 2,
+        "low": 0
+      },
+      "findings": [
+        {
+          "code": "image-without-alt",
+          "severity": "critical",
+          "scope": "page 1 /Im1",
+          "message": "image XObject /Im1 has no /Alt and is not marked /Artifact",
+          "hint": "add /Alt to the image XObject, or mark a decorative image as an artifact",
+          "points": 30
+        },
+        {
+          "code": "missing-lang",
+          "severity": "high",
+          "scope": "catalog",
+          "message": "the document catalog has no /Lang entry",
+          "hint": "set /Lang on the catalog, for example << /Lang (en) >>",
+          "points": 15
+        },
+        {
+          "code": "untagged",
+          "severity": "high",
+          "scope": "catalog",
+          "message": "no /MarkInfo << /Marked true >> and no /StructTreeRoot: the file is untagged",
+          "hint": "export the document with tagging enabled so that a structure tree exists",
+          "points": 15
+        },
+        {
+          "code": "missing-title",
+          "severity": "medium",
+          "scope": "info",
+          "message": "the /Info dictionary has no /Title",
+          "hint": "set /Title in the document information dictionary",
+          "points": 8
+        },
+        {
+          "code": "font-not-embedded",
+          "severity": "medium",
+          "scope": "page 1 /F1",
+          "message": "font /Helvetica has no /FontFile, /FontFile2 or /FontFile3",
+          "hint": "embed the font: add a FontDescriptor with a FontFile2 stream",
+          "points": 8
+        }
+      ]
+    },
+    {
+      "file": "examples/legacy.pdf",
+      "bytes": 1496,
+      "version": "1.7",
+      "objects": 9,
+      "pages": 2,
+      "risk": 38,
+      "grade": "D",
+      "clean": false,
+      "counts": {
+        "critical": 0,
+        "high": 2,
+        "medium": 1,
+        "low": 0
+      },
+      "findings": [
+        {
+          "code": "missing-lang",
+          "severity": "high",
+          "scope": "catalog",
+          "message": "the document catalog has no /Lang entry",
+          "hint": "set /Lang on the catalog, for example << /Lang (en) >>",
+          "points": 15
+        },
+        {
+          "code": "untagged",
+          "severity": "high",
+          "scope": "catalog",
+          "message": "no /MarkInfo << /Marked true >> and no /StructTreeRoot: the file is untagged",
+          "hint": "export the document with tagging enabled so that a structure tree exists",
+          "points": 15
+        },
+        {
+          "code": "font-not-embedded",
+          "severity": "medium",
+          "scope": "page 1 /F1",
+          "message": "font /Helvetica has no /FontFile, /FontFile2 or /FontFile3",
+          "hint": "embed the font: add a FontDescriptor with a FontFile2 stream",
+          "points": 8
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "code": "image-without-alt",
+      "severity": "critical",
+      "points": 30,
+      "checks": "every image XObject reachable from a page carries /Alt or is marked /Artifact",
+      "hint": "add /Alt to the image XObject, or mark a decorative image as an artifact"
+    },
+    {
+      "code": "xref-offset-wrong",
+      "severity": "critical",
+      "points": 30,
+      "checks": "each in-use xref entry points at the byte where its object really starts",
+      "hint": "rewrite the file with a writer that measures offsets instead of guessing them"
+    },
+    {
+      "code": "missing-lang",
+      "severity": "high",
+      "points": 15,
+      "checks": "the document catalog declares a default language with /Lang",
+      "hint": "set /Lang on the catalog, for example << /Lang (en) >>"
+    },
+    {
+      "code": "untagged",
+      "severity": "high",
+      "points": 15,
+      "checks": "the catalog has /MarkInfo << /Marked true >> and a /StructTreeRoot",
+      "hint": "export the document with tagging enabled so that a structure tree exists"
+    },
+    {
+      "code": "no-page-tree",
+      "severity": "high",
+      "points": 15,
+      "checks": "/Root -> /Pages -> /Kids can be walked down to at least one page",
+      "hint": "repair the page tree: /Root needs /Pages, and every node needs /Kids or /Type /Page"
+    },
+    {
+      "code": "font-not-embedded",
+      "severity": "medium",
+      "points": 8,
+      "checks": "every font in a page's resources resolves to a /FontFile, /FontFile2 or /FontFile3",
+      "hint": "embed the font: add a FontDescriptor with a FontFile2 stream"
+    },
+    {
+      "code": "missing-title",
+      "severity": "medium",
+      "points": 8,
+      "checks": "the /Info dictionary carries a non-empty /Title",
+      "hint": "set /Title in the document information dictionary"
+    }
+  ],
+  "totals": {
+    "files": 3,
+    "clean": 1,
+    "findings": 8,
+    "bytes": 5179
+  }
+}
